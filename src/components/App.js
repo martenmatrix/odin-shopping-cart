@@ -3,16 +3,21 @@ import './styles/App.css';
 import Homepage from './Homepage';
 
 function StickyHeader() {
-
+  return (
+    <></>
+  )
 }
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Homepage shopPath='lol'/>} />
-      </Routes>
-    </BrowserRouter>
+    <div className="main">
+      <StickyHeader/>
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<Homepage shopPath='lol'/>} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 

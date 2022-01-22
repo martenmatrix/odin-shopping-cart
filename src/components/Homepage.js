@@ -17,10 +17,10 @@ function MiddleCenter(props) {
 
     return (
         <div className="middle-center">
-            <h1>Fast. Affordable. Quality.</h1>
-            <h2>We provide the newest graphics cards for the best price. All our cards will be taken under a quality test before they are shipped out. Additionally we have a support-team, which is 24 hours every day online. We provide the newest graphics cards for the best price. All our cards will be taken under a quality test before they are shipped out. Additionally we have a support-team, which is 24 hours every day online. We provide the newest graphics cards for the best price. All our cards will be taken under a quality test before they are shipped out. Additionally we have a support-team, which is 24 hours every day online.</h2>
+            <h1 className="title">Fast. Affordable. Quality.</h1>
+            <h4 className="description">We provide the newest graphics cards for the best price. All our cards will be taken under a quality test before they are shipped out. Additionally we have a support-team, which is 24 hours every day online. We provide the newest graphics cards for the best price. All our cards will be taken under a quality test before they are shipped out. Additionally we have a support-team, which is 24 hours every day online. We provide the newest graphics cards for the best price. All our cards will be taken under a quality test before they are shipped out. Additionally we have a support-team, which is 24 hours every day online.</h4>
             <Link className="button black buy" to={shopPath}>
-                Buy now
+                BUY NOW
             </Link>
         </div>
     )
