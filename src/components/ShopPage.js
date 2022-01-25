@@ -30,34 +30,12 @@ function Sidebar() {
     const uniqueChipsets = getUnique('chipset');
     const uniqueSeries = getUnique('series');
 
-    function getOldArray(key) {
-        if (!searchParams.has(key)) return [];
-
-        const searchParamString = searchParams.get(key);
-        const filterArray = JSON.parse(searchParamString);
-        return filterArray;
+    URLSearchParams.prototype.remove = function(key, value) {
+        const entries = this.getAll(key);
+        const newEntries = entries.filter(entry => entry !== value);
+        this.delete(key);
+        newEntries.forEach(newEntry => this.append(key, newEntry));
     }
-
-    function addSearchParamToArray(key, valueToAdd) {
-        const oldArray = getOldArray(key);
-        const newArray = oldArray.concat(valueToAdd);
-        const newArrayString = JSON.stringify(newArray);
-
-        const newParams = Object.fromEntries([...searchParams])
-        newParams[key] = newArrayString;
-        setSearchParams(newParams);
-    }
-
-    function removeSearchParamFromArray(key, valueToRemove) {
-        const oldArray = getOldArray(key);
-        const newArray = oldArray.filter(value => value !== valueToRemove);
-        const newArrayString = JSON.stringify(newArray);
-        
-        const newParams = Object.fromEntries([...searchParams])
-        newParams[key] = newArrayString;
-        setSearchParams(newParams);
-    }
-
 
     function handleSelection(e) {
         const input = e.target.closest('input');
@@ -67,10 +45,15 @@ function Sidebar() {
         const value = input.id;
         const active = input.checked;
         
+        const url = document.location;
         if (active) {
-            addSearchParamToArray(key, value);
+            const newURLParams = new URLSearchParams(url.search);
+            newURLParams.append(key, value);
+            setSearchParams(newURLParams);
         } else if (!active) {
-            removeSearchParamFromArray(key, value);
+            const newURLParams = new URLSearchParams(url.search);
+            newURLParams.remove(key, value);
+            setSearchParams(newURLParams);
         }
     }
 
@@ -140,22 +123,49 @@ function AllProductPreviews() {
         });
     }
 
-    useEffect(() => {
-        const newFilteredProducts = [];
+    function getAllFiltered() {
+        const filteredProducts = [];
 
-        const getDifferentEntries = () => {
-            
+        const keepOrAdd = (product) => {
+            const isAlreadyAnEntry = filteredProducts.includes(product);
+            if (!isAlreadyAnEntry) {
+                filteredProducts.push(product);
+            }
+        }
+
+        const remove = (product) => {
+            const index = filteredProducts.indexOf(product);
+            filteredProducts.splice(index, 1);
         }
 
         possibleFilters.forEach(filter => {
-            if(!searchParams.has(filter)) return;
-            const searchParamString = searchParams.get(filter);
-            const filterArray = JSON.parse(searchParamString);
-    
-            const filtered = getFiltered(filter, filterArray);
+            const isActive = searchParams.has(filter);
+            if (isActive) {
+                const hasEntries = !!searchParams.getAll(filter).length;
+                if (!hasEntries) return;
+            };
             
-            getDifferentEntries()
+            const selectedAvailableOptions = searchParams.getAll(filter);
+            const filteredProductsForCurrentFilter = getFiltered(filter, selectedAvailableOptions);
+
+            // delete entry if it is already in array, but not in current filter
+            filteredProducts.forEach(product => {
+                const isInCurrentFilterArray = filteredProductsForCurrentFilter.includes(product);
+
+                if (!isInCurrentFilterArray) {
+                    remove(product);
+                }
+            });
+
+            // add new appended products array
+            filteredProductsForCurrentFilter.forEach(product => keepOrAdd(product));
         });
+
+        setFilteredProducts(filteredProducts);
+    }
+
+    useEffect(() => {
+        getAllFiltered();
     }, [searchParams])
 
     return (
