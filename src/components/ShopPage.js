@@ -128,6 +128,11 @@ function AllProductPreviews() {
     const possibleFilters = ['chipset', 'series'];
 
     function getFiltered(category, selection) {
+
+        if (selection.length === 0) {
+            return products;
+        }
+
         return products.filter(product => {
             const value = product[category];
             const isInSelection = selection.includes(value);
@@ -136,16 +141,22 @@ function AllProductPreviews() {
     }
 
     useEffect(() => {
+        const newFilteredProducts = [];
+
+        const getDifferentEntries = () => {
+            
+        }
+
         possibleFilters.forEach(filter => {
             if(!searchParams.has(filter)) return;
             const searchParamString = searchParams.get(filter);
             const filterArray = JSON.parse(searchParamString);
-            if (!filterArray.length) return;
     
             const filtered = getFiltered(filter, filterArray);
-            setFilteredProducts(filtered);
+            
+            getDifferentEntries()
         });
-    }, [])
+    }, [searchParams])
 
     return (
         <div className="products">
