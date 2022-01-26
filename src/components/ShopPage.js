@@ -10,10 +10,11 @@ function FilterInput(props) {
     const key = props.objectKey;
     const value = props.value;
     const name =  props.name ? props.name : value;
+    const checked = props.checked ? true : false;
 
     return (
         <>
-            <input id={value} type="checkbox" data-key={key} name={name} />
+            <input id={value} type="checkbox" defaultChecked={checked} data-key={key} name={name} />
             <label htmlFor={value}>{name}</label>
         </>
     )
@@ -58,16 +59,27 @@ function Sidebar() {
         }
     }
 
+    function isApplied(filter, value) {
+        const hasFilter = searchParams.has(filter);
+        if (hasFilter) {
+            const allAppliedFiltersForCategory =  searchParams.getAll(filter);
+            const isSpecific = allAppliedFiltersForCategory.includes(value);
+            return isSpecific;
+        } else {
+            return false;
+        }
+    }
+
     return (
         <div className="shop-sidebar" onClick={handleSelection}>
             <div className="section">
                 <h2 className="title">Chipset</h2>
-                {uniqueChipsets.map(chipset => <FilterInput key={chipset} objectKey="chipset" value={chipset} />)}
+                {uniqueChipsets.map(chipset => <FilterInput key={chipset} checked={isApplied("chipset", chipset)} objectKey="chipset" value={chipset} />)}
             </div>
 
             <div className="section">
                 <h2 className="title">Series</h2>
-                {uniqueSeries.map(series => <FilterInput key={series} objectKey="series" value={series} />)}
+                {uniqueSeries.map(series => <FilterInput key={series} checked={isApplied("series", series)} objectKey="series" value={series} />)}
             </div>
         </div>    
     )
