@@ -71,20 +71,7 @@ function Sidebar() {
             </div>
         </div>    
     )
-}   
-
-/*
-    Example product
-    {
-        id: '1',
-        name: 'AMD Radeon RX 6700XT',
-        img: RadeonRX6700xt,
-        chipset: 'AMD',
-        series: 'RX',
-        price: '200',
-        currency: 'EUR',
-    },
-*/
+}
 
 function ProductPreview(props) {
     const productObject = props.productObject;
