@@ -109,19 +109,6 @@ function AllProductPreviews() {
     const [searchParams] = useContext(searchParamsContext);
     const [filteredProducts, setFilteredProducts] = useState(products);
 
-    function getFiltered(category, selection) {
-
-        if (selection.length === 0) {
-            return products;
-        }
-
-        return products.filter(product => {
-            const value = product[category];
-            const isInSelection = selection.includes(value);
-            return isInSelection;
-        });
-    }
-
     function getAllFiltered() {
         const getAppliedFilters = () =>  {
             const filters = {};
