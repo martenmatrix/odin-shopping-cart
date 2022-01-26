@@ -94,12 +94,14 @@ function ProductPreview(props) {
     const currency = productObject.currency;
 
     return (
-        <Link to={`/product/${id}`} className="product-preview">
+        <Link to={`/product/${id}`} className="product">
             <img src={img} alt={name}></img>
             <div className="information">
                 <div className="name">{name.toUpperCase()}</div>
-                <div className="price">{price}</div>
-                <div className="currency">{currency}</div>
+                <div className="price-wrapper">
+                    <div className="price">{price}</div>
+                    <div className="currency">{currency}</div>
+                </div>
             </div>
         </Link>
     )
