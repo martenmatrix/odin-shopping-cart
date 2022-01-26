@@ -109,7 +109,6 @@ function ProductPreview(props) {
 function AllProductPreviews() {
     const [searchParams] = useContext(searchParamsContext);
     const [filteredProducts, setFilteredProducts] = useState(products);
-    const possibleFilters = ['chipset', 'series'];
 
     function getFiltered(category, selection) {
 
@@ -125,47 +124,45 @@ function AllProductPreviews() {
     }
 
     function getAllFiltered() {
-        const newFilteredProducts = [...filteredProducts];
+        const getAppliedFilters = () =>  {
+            const filters = {};
+            const possibleFilters = [...searchParams.keys()];
 
-        const keepOrAdd = (product) => {
-            const isAlreadyAnEntry = newFilteredProducts.includes(product);
-            if (!isAlreadyAnEntry) {
-                newFilteredProducts.push(product);
-            }
-        }
-
-        const remove = (product) => {
-            const index = newFilteredProducts.indexOf(product);
-            newFilteredProducts.splice(index, 1);
-        }
-
-        possibleFilters.forEach(filter => {
-            const isActive = searchParams.has(filter);
-            
-            const selectedAvailableOptions = isActive ? searchParams.getAll(filter) : [];
-            const filteredProductsForCurrentFilter = getFiltered(filter, selectedAvailableOptions);
-
-            // delete entry if it is already in array, but not in current filter
-            const entriesToDelete = [];
-            newFilteredProducts.forEach(product => {
-                const isInCurrentFilterArray = filteredProductsForCurrentFilter.includes(product);
-
-                if (!isInCurrentFilterArray) {
-                    entriesToDelete.push(product);
+            possibleFilters.forEach(filter => {
+                const isActive = searchParams.has(filter);
+                if (isActive) {
+                    filters[filter] = searchParams.getAll(filter);
                 }
             });
 
-            entriesToDelete.forEach(entry => remove(entry));
+            return filters;
+        }
 
-            // add new appended products array
-            filteredProductsForCurrentFilter.forEach(product => keepOrAdd(product));
+        const appliedFilters = getAppliedFilters();
+        const filterLength = Object.keys(appliedFilters).length;
+        if (filterLength === 0) {
+            return products;
+        }
+
+        const filteredProducts= products.filter(product => {
+            for (const [key, valueArray] of Object.entries(appliedFilters)) {
+                const isValid = valueArray.some(value => {
+                    return product[key] === value;
+                });
+
+                if (!isValid) {
+                    return false;
+                }
+            }
+            return true;
         });
 
-        setFilteredProducts(newFilteredProducts);
+        return filteredProducts;
     }
-
+    
     useEffect(() => {
-        getAllFiltered();
+        const filteredProducts = getAllFiltered();
+        setFilteredProducts(filteredProducts);
     }, [searchParams])
 
     return (
