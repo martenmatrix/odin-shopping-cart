@@ -141,15 +141,8 @@ function AllProductPreviews() {
 
         possibleFilters.forEach(filter => {
             const isActive = searchParams.has(filter);
-            if (!isActive) {
-                return;
-            }
-            if (isActive) {
-                const hasEntries = !!searchParams.getAll(filter).length;
-                if (!hasEntries) return;
-            };
             
-            const selectedAvailableOptions = searchParams.getAll(filter);
+            const selectedAvailableOptions = isActive ? searchParams.getAll(filter) : [];
             const filteredProductsForCurrentFilter = getFiltered(filter, selectedAvailableOptions);
 
             // delete entry if it is already in array, but not in current filter
