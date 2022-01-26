@@ -1,3 +1,4 @@
+'use strict';
 import './styles/ShopPage.css';
 import { useState, createContext, useContext, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
@@ -124,22 +125,25 @@ function AllProductPreviews() {
     }
 
     function getAllFiltered() {
-        const filteredProducts = [];
+        const newFilteredProducts = [...filteredProducts];
 
         const keepOrAdd = (product) => {
-            const isAlreadyAnEntry = filteredProducts.includes(product);
+            const isAlreadyAnEntry = newFilteredProducts.includes(product);
             if (!isAlreadyAnEntry) {
-                filteredProducts.push(product);
+                newFilteredProducts.push(product);
             }
         }
 
         const remove = (product) => {
-            const index = filteredProducts.indexOf(product);
-            filteredProducts.splice(index, 1);
+            const index = newFilteredProducts.indexOf(product);
+            newFilteredProducts.splice(index, 1);
         }
 
         possibleFilters.forEach(filter => {
             const isActive = searchParams.has(filter);
+            if (!isActive) {
+                return;
+            }
             if (isActive) {
                 const hasEntries = !!searchParams.getAll(filter).length;
                 if (!hasEntries) return;
@@ -149,19 +153,22 @@ function AllProductPreviews() {
             const filteredProductsForCurrentFilter = getFiltered(filter, selectedAvailableOptions);
 
             // delete entry if it is already in array, but not in current filter
-            filteredProducts.forEach(product => {
+            const entriesToDelete = [];
+            newFilteredProducts.forEach(product => {
                 const isInCurrentFilterArray = filteredProductsForCurrentFilter.includes(product);
 
                 if (!isInCurrentFilterArray) {
-                    remove(product);
+                    entriesToDelete.push(product);
                 }
             });
+
+            entriesToDelete.forEach(entry => remove(entry));
 
             // add new appended products array
             filteredProductsForCurrentFilter.forEach(product => keepOrAdd(product));
         });
 
-        setFilteredProducts(filteredProducts);
+        setFilteredProducts(newFilteredProducts);
     }
 
     useEffect(() => {
