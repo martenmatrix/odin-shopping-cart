@@ -37,7 +37,7 @@ const products = [
     },
     {
         id: '4',
-        name: 'Nvidia GeForce RTX 3060 Ti Website by Marten',
+        name: 'Nvidia GeForce RTX 3060 Ti Website by Marten222',
         img: NvidiaRTX3060Ti,
         chipset: 'Nvidia',
         series: 'RTX',
