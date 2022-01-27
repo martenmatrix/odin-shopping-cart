@@ -1,7 +1,7 @@
 'use strict';
 import './styles/ShopPage.css';
 import { useState, createContext, useContext, useEffect, useRef } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams, Outlet, Route, Routes } from 'react-router-dom';
 import products from './data/products';
 
 const searchParamsContext = createContext(); 
@@ -180,17 +180,23 @@ function AllProductPreviews() {
 
     if (filteredProducts.length === 0) {
         return (
-            <div className="products">
-                <div className="empty">
-                    Emptiness :(
-                </div>
+            <div className="empty">
+                Emptiness :(
             </div>
         )
     }
 
     return (
-        <div className="products">
+        <>
             {filteredProducts.map(product => <ProductPreview key={product.id} productObject={product}/>)}
+        </>
+    )
+}
+
+function Layout() {
+    return (
+        <div className="products">
+            <Outlet />
         </div>
     )
 }
@@ -202,7 +208,11 @@ function ShopPage() {
         <searchParamsContext.Provider value={searchParams}>
         <div className="main-shop">
             <Sidebar />
-            <AllProductPreviews />
+            <Routes>
+            <Route path="/" element={<Layout />}>
+                <Route index element={<AllProductPreviews />} />
+            </Route>
+            </Routes>
         </div>
         </searchParamsContext.Provider>
     )
