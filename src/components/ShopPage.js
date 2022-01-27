@@ -11,10 +11,21 @@ function FilterInput(props) {
     const value = props.value;
     const name =  props.name ? props.name : value;
     const checked = props.checked ? true : false;
+    const [isDisabled, setIsDisabled] = useState(true);
+
+    useEffect(() => {
+        // disable input, if not currently on shop page
+        if (!(window.location.pathname === '/shop')) {
+            console.log('User is not currently on /products page. Input remains disabled.')
+            setIsDisabled(true);
+            return;
+        };
+        setIsDisabled(false);
+    })
 
     return (
         <div className="filter-input">
-            <input id={value} type="checkbox" defaultChecked={checked} data-key={key} name={name} />
+            <input id={value} type="checkbox" disabled={isDisabled} defaultChecked={checked} data-key={key} name={name} />
             <div className="new-checkbox-design">
                 <div className="activated"></div>
             </div>
@@ -45,6 +56,12 @@ function Sidebar() {
     function handleSelection(e) {
         const input = e.target.closest('input');
         if (input === null) return;
+
+        // return if user currently views a product
+        if (!(window.location.pathname === '/shop')) {
+            console.log('User is not currently on /products page. Changing search params aborted.');
+            return;
+        };
 
         const key = input.dataset.key;
         const value = input.id;
@@ -113,7 +130,7 @@ function ProductPreview(props) {
 
 
     return (
-        <Link to={`/product/${id}`} className="product">
+        <Link to={`product/${id}`} className="product">
             <img src={img} alt={name}></img>
             <div className="information">
                 <div className="scroll-wrapper">
@@ -211,6 +228,7 @@ function ShopPage() {
             <Routes>
             <Route path="/" element={<Layout />}>
                 <Route index element={<AllProductPreviews />} />
+                <Route path="/product/:id" element={<p>Cool</p>}/>
             </Route>
             </Routes>
         </div>
