@@ -13,10 +13,13 @@ function FilterInput(props) {
     const checked = props.checked ? true : false;
 
     return (
-        <>
+        <div className="filter-input">
             <input id={value} type="checkbox" defaultChecked={checked} data-key={key} name={name} />
+            <div className="new-checkbox-design">
+                <div className="activated"></div>
+            </div>
             <label htmlFor={value}>{name}</label>
-        </>
+        </div>
     )
 }
 
