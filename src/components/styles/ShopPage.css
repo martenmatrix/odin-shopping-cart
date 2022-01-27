@@ -39,12 +39,14 @@
 
 .products .product .information {
     height: 20%;
+    box-sizing: border-box;
+    margin: 0 1%;
+    margin-right: calc(1% + 10px);
 
     display: flex;
     align-items: center;
     justify-content: space-between;
     line-height: 1; /* keeps text of name and price on the same height, noticeable when hovering a product, which has an animated title */
-    margin-right: 10px;
 
     color: black;
 
@@ -108,7 +110,8 @@
 
 .product .information .price-wrapper {
     display: flex;
-    gap: 5px;
+    justify-content: space-between;
+    width: 20%;
 }
 
 .products .product:hover {
