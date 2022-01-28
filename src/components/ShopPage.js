@@ -1,18 +1,17 @@
 'use strict';
 import './styles/ShopPage.css';
 import { useState, createContext, useContext, useEffect, useRef } from 'react';
-import { Link, useSearchParams, Outlet, Route, Routes } from 'react-router-dom';
+import { Link, useSearchParams, useLocation, Outlet, Route, Routes } from 'react-router-dom';
 import ProductOverview from './ProductOverview';
 import products from './data/products';
 
 function FilterInput(props) {
-    const [searchParams, setSearchParams] = useContext(searchParamsContext);
+    const [searchParams] = useContext(searchParamsContext);
 
     const key = props.objectKey;
     const value = props.value;
     const name =  props.name ? props.name : value;
     const [checked, setChecked] = useState(props)
-    const [isDisabled, setIsDisabled] = useState(true);
 
     function isApplied(filter, value) {
         const hasFilter = searchParams.has(filter);
@@ -34,19 +33,9 @@ function FilterInput(props) {
         }
     }, [searchParams]);
 
-    useEffect(() => {
-        // disable input, if not currently on shop page
-        if (!(window.location.pathname === '/shop')) {
-            console.log('User is not currently on /shop page. Input remains disabled.')
-            setIsDisabled(true);
-            return;
-        };
-        setIsDisabled(false);
-    })
-
     return (
         <div className="filter-input">
-            <input id={value} type="checkbox" disabled={isDisabled} checked={checked} data-key={key} name={name} />
+            <input id={value} type="checkbox" readOnly checked={checked} data-key={key} name={name} />
             <div className="new-checkbox-design">
                 <div className="activated"></div>
             </div>
@@ -77,12 +66,6 @@ function Sidebar() {
     function handleSelection(e) {
         const input = e.target.closest('input');
         if (input === null) return;
-
-        // return if user currently views a product
-        if (!(window.location.pathname === '/shop')) {
-            console.log('User is not currently on /shop page. Changing search params aborted.');
-            return;
-        };
 
         const key = input.dataset.key;
         const value = input.id;
@@ -234,6 +217,7 @@ const searchParamsContext = createContext();
 
 function ShopPage() {
     const [searchParams, setSearchParams] = useSearchParams();
+    const location = useLocation(); // couldn't i just use window.location.pathname ?
 
     useEffect(() => {
         const filters = localStorage.getItem('filter');
@@ -241,7 +225,7 @@ function ShopPage() {
             const newParams = new URLSearchParams(filters);
             setSearchParams(newParams);
         }
-    }, [])
+    }, [location.pathname])
 
     return (
         <searchParamsContext.Provider value={[searchParams, setSearchParams]}>
