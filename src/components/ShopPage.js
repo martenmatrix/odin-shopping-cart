@@ -225,7 +225,7 @@ function ShopPage() {
             const newParams = new URLSearchParams(filters);
             setSearchParams(newParams);
         }
-    }, [location.pathname])
+    }, [location.pathname]) // does not trigger when user clicks home nav button twice because path stays the same => filter will be reset
 
     return (
         <searchParamsContext.Provider value={[searchParams, setSearchParams]}>
