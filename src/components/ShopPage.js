@@ -2,21 +2,42 @@
 import './styles/ShopPage.css';
 import { useState, createContext, useContext, useEffect, useRef } from 'react';
 import { Link, useSearchParams, Outlet, Route, Routes } from 'react-router-dom';
+import ProductOverview from './ProductOverview';
 import products from './data/products';
 
-const searchParamsContext = createContext(); 
-
 function FilterInput(props) {
+    const [searchParams, setSearchParams] = useContext(searchParamsContext);
+
     const key = props.objectKey;
     const value = props.value;
     const name =  props.name ? props.name : value;
-    const checked = props.checked ? true : false;
+    const [checked, setChecked] = useState(props)
     const [isDisabled, setIsDisabled] = useState(true);
+
+    function isApplied(filter, value) {
+        const hasFilter = searchParams.has(filter);
+        if (hasFilter) {
+            const allAppliedFiltersForCategory = searchParams.getAll(filter);
+            const isSpecific = allAppliedFiltersForCategory.includes(value);
+            return isSpecific;
+        } else {
+            return false;
+        }
+    }
+
+    useEffect(() => {
+        const shouldCheck = isApplied(key, value);
+        if (shouldCheck) {
+            setChecked(true);
+        } else {
+            setChecked(false)
+        }
+    }, [searchParams]);
 
     useEffect(() => {
         // disable input, if not currently on shop page
         if (!(window.location.pathname === '/shop')) {
-            console.log('User is not currently on /products page. Input remains disabled.')
+            console.log('User is not currently on /shop page. Input remains disabled.')
             setIsDisabled(true);
             return;
         };
@@ -25,7 +46,7 @@ function FilterInput(props) {
 
     return (
         <div className="filter-input">
-            <input id={value} type="checkbox" disabled={isDisabled} defaultChecked={checked} data-key={key} name={name} />
+            <input id={value} type="checkbox" disabled={isDisabled} checked={checked} data-key={key} name={name} />
             <div className="new-checkbox-design">
                 <div className="activated"></div>
             </div>
@@ -59,15 +80,15 @@ function Sidebar() {
 
         // return if user currently views a product
         if (!(window.location.pathname === '/shop')) {
-            console.log('User is not currently on /products page. Changing search params aborted.');
+            console.log('User is not currently on /shop page. Changing search params aborted.');
             return;
         };
 
         const key = input.dataset.key;
         const value = input.id;
         const active = input.checked;
-        
         const url = document.location;
+
         if (active) {
             const newURLParams = new URLSearchParams(url.search);
             newURLParams.append(key, value);
@@ -77,29 +98,20 @@ function Sidebar() {
             newURLParams.remove(key, value);
             setSearchParams(newURLParams);
         }
-    }
 
-    function isApplied(filter, value) {
-        const hasFilter = searchParams.has(filter);
-        if (hasFilter) {
-            const allAppliedFiltersForCategory =  searchParams.getAll(filter);
-            const isSpecific = allAppliedFiltersForCategory.includes(value);
-            return isSpecific;
-        } else {
-            return false;
-        }
+        localStorage.setItem('filter', url.search)
     }
 
     return (
         <div className="shop-sidebar" onClick={handleSelection}>
             <div className="section">
                 <h2 className="title">Chipset</h2>
-                {uniqueChipsets.map(chipset => <FilterInput key={chipset} checked={isApplied("chipset", chipset)} objectKey="chipset" value={chipset} />)}
+                {uniqueChipsets.map(chipset => <FilterInput key={chipset} objectKey="chipset" value={chipset} />)}
             </div>
 
             <div className="section">
                 <h2 className="title">Series</h2>
-                {uniqueSeries.map(series => <FilterInput key={series} checked={isApplied("series", series)} objectKey="series" value={series} />)}
+                {uniqueSeries.map(series => <FilterInput key={series} objectKey="series" value={series} />)}
             </div>
         </div>    
     )
@@ -150,7 +162,7 @@ function ProductPreview(props) {
 }
 
 function AllProductPreviews() {
-    const [searchParams] = useContext(searchParamsContext);
+    const [searchParams, setSearchParams] = useContext(searchParamsContext);
     const [filteredProducts, setFilteredProducts] = useState(products);
 
     function getAllFiltered() {
@@ -189,7 +201,7 @@ function AllProductPreviews() {
 
         return filteredProducts;
     }
-    
+
     useEffect(() => {
         const filteredProducts = getAllFiltered();
         setFilteredProducts(filteredProducts);
@@ -218,17 +230,27 @@ function Layout() {
     )
 }
 
+const searchParamsContext = createContext(); 
+
 function ShopPage() {
-    const searchParams = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    useEffect(() => {
+        const filters = localStorage.getItem('filter');
+        if (filters) {
+            const newParams = new URLSearchParams(filters);
+            setSearchParams(newParams);
+        }
+    }, [])
 
     return (
-        <searchParamsContext.Provider value={searchParams}>
+        <searchParamsContext.Provider value={[searchParams, setSearchParams]}>
         <div className="main-shop">
             <Sidebar />
             <Routes>
             <Route path="/" element={<Layout />}>
                 <Route index element={<AllProductPreviews />} />
-                <Route path="/product/:id" element={<p>Cool</p>}/>
+                <Route path="/product/:id" element={<ProductOverview />}/>
             </Route>
             </Routes>
         </div>
