@@ -11,7 +11,7 @@ const products = [
     {
         id: '1',
         name: 'AMD Radeon RX 6700XT',
-        img: RadeonRX6700xt,
+        img: [RadeonRX6700xt],
         chipset: 'AMD',
         series: 'RX',
         price: '200',
@@ -20,7 +20,7 @@ const products = [
     {
         id: '2',
         name: 'AMD Radeon RX 6800XT',
-        img: RadeonRX6800xt,
+        img: [RadeonRX6800xt],
         chipset: 'AMD',
         series: 'RX',
         price: '200',
@@ -29,7 +29,7 @@ const products = [
     {
         id: '3',
         name: 'AMD Radeon RX 6900XT',
-        img: RadeonRX6900xt,
+        img: [RadeonRX6900xt],
         chipset: 'AMD',
         series: 'RX',
         price: '200',
@@ -38,7 +38,7 @@ const products = [
     {
         id: '4',
         name: 'Nvidia GeForce RTX 3060 Ti Website by Marten222',
-        img: NvidiaRTX3060Ti,
+        img: [NvidiaRTX3060Ti],
         chipset: 'Nvidia',
         series: 'RTX',
         price: '200',
@@ -47,7 +47,7 @@ const products = [
     {
         id: '5',
         name: 'Nvidia GeForce RTX 3070',
-        img: NvidiaRTX3070,
+        img: [NvidiaRTX3070],
         chipset: 'Nvidia',
         series: 'RTX',
         price: '200',
@@ -56,7 +56,7 @@ const products = [
     {
         id: '6',
         name: 'Nvidia GeForce RTX 3080',
-        img: NvidiaRTX3080,
+        img: [NvidiaRTX3080],
         chipset: 'Nvidia',
         series: 'RTX',
         price: '200',
@@ -65,7 +65,7 @@ const products = [
     {
         id: '7',
         name: 'Nvidia GeForce RTX 3090',
-        img: NvidiaRTX3090,
+        img: [NvidiaRTX3090],
         chipset: 'Nvidia',
         series: 'RTX',
         price: '200',
