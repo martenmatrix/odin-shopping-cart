@@ -1,12 +1,57 @@
 'use strict';
 import './styles/ShopPage.css';
 import { useState, createContext, useContext, useEffect, useRef } from 'react';
-import { Link, useLocation, Outlet, Route, Routes } from 'react-router-dom';
+import { Link, useLocation, useNavigate, Outlet, Route, Routes } from 'react-router-dom';
 import ProductOverview from './ProductOverview';
 import products from './data/products';
 
+function useCustomSearchParams() {
+    const customURLSearchParams = URLSearchParams;
+    customURLSearchParams.prototype.remove = function(key, value) {
+        const entries = this.getAll(key);
+        const newEntries = entries.filter(entry => entry !== value);
+        this.delete(key);
+        newEntries.forEach(newEntry => this.append(key, newEntry));
+    }
+
+    const navigate = useNavigate();
+    const location = useLocation(); // couldn't i just use window.location.pathname ?
+
+    const setSearchParams = (newParams) => {
+        const newObject = new URLSearchParams(newParams);
+        localStorage.setItem('filter', newObject);
+        const to = { pathname: location.pathname, search: newParams.toString() };
+        navigate(to, { replace: true });
+    }
+
+    const addSearchParam = (key, value) => {
+        const newURLParams = new URLSearchParams(location.search);
+        newURLParams.append(key, value);
+        setSearchParams(newURLParams);
+    }
+    
+    const removeSearchParam = (key, value) => {
+        const newURLParams = new customURLSearchParams(location.search);
+        newURLParams.remove(key, value);
+        setSearchParams(newURLParams);
+    }
+
+    const getSearchParams = () => {
+        return new URLSearchParams(location.search);
+    }
+
+    useEffect(() => {
+        const filters = localStorage.getItem('filter');
+        if (filters) {
+            setSearchParams(filters);
+        }
+    }, [location.pathname]) // does not trigger when user clicks home nav button twice because path stays the same => filter will be reset
+
+    return [addSearchParam, removeSearchParam, getSearchParams()];
+}
+
 function FilterInput(props) {
-    const [searchParams] = useContext(searchParamsContext);
+    const [addSearchParam, removeSearchParam, searchParams] = useContext(searchParamsContext);
 
     const key = props.objectKey;
     const value = props.value;
@@ -45,7 +90,7 @@ function FilterInput(props) {
 }
 
 function Sidebar() {
-    const [searchParams, setSearchParams] = useContext(searchParamsContext);
+    const [addSearchParam, removeSearchParam] = useContext(searchParamsContext);
 
     function getUnique(key) {
         const allValues = products.map(product => product[key]);
@@ -56,13 +101,6 @@ function Sidebar() {
     const uniqueChipsets = getUnique('chipset');
     const uniqueSeries = getUnique('series');
 
-    URLSearchParams.prototype.remove = function(key, value) {
-        const entries = this.getAll(key);
-        const newEntries = entries.filter(entry => entry !== value);
-        this.delete(key);
-        newEntries.forEach(newEntry => this.append(key, newEntry));
-    }
-
     function handleSelection(e) {
         const input = e.target.closest('input');
         if (input === null) return;
@@ -70,19 +108,12 @@ function Sidebar() {
         const key = input.dataset.key;
         const value = input.id;
         const active = input.checked;
-        const url = document.location;
 
         if (active) {
-            const newURLParams = new URLSearchParams(url.search);
-            newURLParams.append(key, value);
-            setSearchParams(newURLParams);
+            addSearchParam(key, value);
         } else if (!active) {
-            const newURLParams = new URLSearchParams(url.search);
-            newURLParams.remove(key, value);
-            setSearchParams(newURLParams);
+            removeSearchParam(key, value);
         }
-
-        localStorage.setItem('filter', url.search)
     }
 
     return (
@@ -145,7 +176,7 @@ function ProductPreview(props) {
 }
 
 function AllProductPreviews() {
-    const [searchParams, setSearchParams] = useContext(searchParamsContext);
+    const [addSearchParam, removeSearchParam, searchParams] = useContext(searchParamsContext);
     const [filteredProducts, setFilteredProducts] = useState(products);
 
     function getAllFiltered() {
@@ -169,7 +200,7 @@ function AllProductPreviews() {
             return products;
         }
 
-        const filteredProducts= products.filter(product => {
+        const filteredProducts = products.filter(product => {
             for (const [key, valueArray] of Object.entries(appliedFilters)) {
                 const isValid = valueArray.some(value => {
                     return product[key] === value;
@@ -215,33 +246,11 @@ function Layout() {
 
 const searchParamsContext = createContext();
 
-
-function useCustomSearchParams() {
-    const setSearchParams = (newParams) = {
-
-    }
-
-    const getSearchParams = () = {
-
-    }
-
-    return [getSearchParams, setSearchParams];
-}
-
 function ShopPage() {
-    const [searchParams, setSearchParams] = useSearchParams();
-    const location = useLocation(); // couldn't i just use window.location.pathname ?
-
-    useEffect(() => {
-        const filters = localStorage.getItem('filter');
-        if (filters) {
-            const newParams = new URLSearchParams(filters);
-            setSearchParams(newParams);
-        }
-    }, [location.pathname]) // does not trigger when user clicks home nav button twice because path stays the same => filter will be reset
+    const [addSearchParam, removeSearchParam, searchParams] = useCustomSearchParams();
 
     return (
-        <searchParamsContext.Provider value={[searchParams, setSearchParams]}>
+        <searchParamsContext.Provider value={[addSearchParam, removeSearchParam, searchParams]}>
         <div className="main-shop">
             <Sidebar />
             <Routes>
