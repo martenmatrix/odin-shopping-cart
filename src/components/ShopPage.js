@@ -1,7 +1,7 @@
 'use strict';
 import './styles/ShopPage.css';
 import { useState, createContext, useContext, useEffect, useRef } from 'react';
-import { Link, useSearchParams, useLocation, Outlet, Route, Routes } from 'react-router-dom';
+import { Link, useLocation, Outlet, Route, Routes } from 'react-router-dom';
 import ProductOverview from './ProductOverview';
 import products from './data/products';
 
@@ -213,7 +213,20 @@ function Layout() {
     )
 }
 
-const searchParamsContext = createContext(); 
+const searchParamsContext = createContext();
+
+
+function useCustomSearchParams() {
+    const setSearchParams = (newParams) = {
+
+    }
+
+    const getSearchParams = () = {
+
+    }
+
+    return [getSearchParams, setSearchParams];
+}
 
 function ShopPage() {
     const [searchParams, setSearchParams] = useSearchParams();
