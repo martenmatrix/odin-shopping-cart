@@ -6,8 +6,6 @@ import { Link, Outlet, Route, Routes } from 'react-router-dom';
 import ProductOverview from './ProductOverview';
 import products from './data/products';
 
-
-
 function FilterInput(props) {
     const [addSearchParam, removeSearchParam, searchParams] = useContext(searchParamsContext);
 
@@ -93,7 +91,8 @@ function ProductPreview(props) {
     const productObject = props.productObject;
     const id = productObject.id;
     const name = productObject.name;
-    const img = productObject.img;
+    const images = productObject.img;
+    const frontImage = images[0];
     const price = productObject.price;
     const currency = productObject.currency;
 
@@ -115,7 +114,7 @@ function ProductPreview(props) {
 
     return (
         <Link to={`product/${id}`} className="product">
-            <img src={img} alt={name}></img>
+            <img src={frontImage} alt={name}></img>
             <div className="information">
                 <div className="scroll-wrapper">
                     <div ref={textRef} className="name">

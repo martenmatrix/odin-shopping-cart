@@ -65,7 +65,7 @@ const products = [
     {
         id: '7',
         name: 'Nvidia GeForce RTX 3090',
-        img: [NvidiaRTX3090],
+        img: [NvidiaRTX3090, NvidiaRTX3090, NvidiaRTX3090, NvidiaRTX3090, NvidiaRTX3090, NvidiaRTX3090],
         chipset: 'Nvidia',
         series: 'RTX',
         price: '200',
