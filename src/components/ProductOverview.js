@@ -33,6 +33,7 @@ function ImagesPreview(props) {
                         <img src={LeftArrow} alt="Arrow which points to the left"></img>
                     </div>
                     <div className="images">
+                        <img src={LeftArrow} />
                         {images.map((img, index) => <img key={index} src={img} />)}
                     </div>
                     <div className="slider right">
@@ -40,9 +41,11 @@ function ImagesPreview(props) {
                     </div>
                 </div>
             </div>
+            { /*
             <div className="all-images">
                 {images.map((img, index) => <ImageSmallPreview key={index} src={img} />)}
             </div>
+            */  }
         </>
     )
 }
@@ -70,7 +73,9 @@ function ProductSection(props) {
     return (
         <div className="main-content">
             <ImagesPreview images={images}/>
+            { /*
             <TitleAndPrice title={title} price={`${price} ${currency}`}/>
+            */ }
         </div>
     )
 }
