@@ -1,49 +1,72 @@
 import './styles/ProductOverview.css';
 import products from './data/products';
 import LeftArrow from './img/misc/left-arrow.svg';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 function NavigateBackToShop() {
     return (
         <Link to="/shop" className="navigate-back">
-            <img src={LeftArrow}></img>
+            <img src={LeftArrow} alt="Arrow which points to the left"></img>
         </Link>  
     )
 }
 
 function ImageSmallPreviewLink(props) {
     const image = props.src;
+    const alt = props.alt;
     const href = props.href;
 
     return (
         <a href={href} className="image-preview">
-            <img src={image}/>
+            <img src={image} alt={alt}/>
         </a>
     )
 }
 
 function ImagesPreview(props) {
     const images = props.images;
+    const slideAmount = images.length;
+
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    function getCurrentSlide() {
+        const hash = location.hash;
+        const slide = hash.replace('#', '');
+        return parseInt(slide);
+    }
+
+    function slideBack() {
+        const newSlideNumber = getCurrentSlide() - 1;
+        if (newSlideNumber < 0 || !newSlideNumber) return;
+        navigate(`#${newSlideNumber}`, { replace: true })
+    }
+
+    function slideForward() {
+        const newSlideNumber = getCurrentSlide() + 1;
+        if (newSlideNumber > slideAmount || !newSlideNumber) return;
+        navigate(`#${newSlideNumber}`, { replace: true });
+    }
 
     return (
         <div className="images-preview">
             <div className="image-slider">
                 <div className="main">
-                    <div className="slider left">
+                    <div className="slider left" onClick={slideBack}>
                         <img src={LeftArrow} alt="Arrow which points to the left"></img>
                     </div>
                     <div className="images">
-                        {images.map((img, index) => <img key={index} id={`slide-${index}`} src={img} />)}
+                        {images.map((img, index) => <img key={index} id={`${index}`} src={img} alt="Preview of Product" />)}
                     </div>
-                    <div className="slider right">
+                    <div className="slider right" onClick={slideForward}>
                         <img src={LeftArrow} alt="Arrow which points to the right"></img>
                     </div>
                 </div>
             </div>
 
             <div className="all-images">
-                {images.map((img, index) => <ImageSmallPreviewLink key={index} href={`#slide-${index}`} src={img} />)}
+                {images.map((img, index) => <ImageSmallPreviewLink key={index} href={`#${index}`} src={img} />)}
             </div>
         </div>
     )

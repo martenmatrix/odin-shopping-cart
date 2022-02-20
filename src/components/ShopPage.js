@@ -1,4 +1,3 @@
-'use strict';
 import './styles/ShopPage.css';
 import { useCustomSearchParams } from './customHooks';
 import { useState, createContext, useContext, useEffect, useRef } from 'react';
@@ -211,10 +210,10 @@ function ShopPage() {
         <div className="main-shop">
             <Sidebar />
             <Routes>
-            <Route path="/" element={<Layout />}>
-                <Route index element={<AllProductPreviews />} />
-                <Route path="/product/:id" element={<ProductOverview />}/>
-            </Route>
+                <Route path="/" element={<Layout />}>
+                    <Route index element={<AllProductPreviews />} />
+                    <Route path="/product/:id" element={<ProductOverview />}/>
+                </Route>
             </Routes>
         </div>
         </searchParamsContext.Provider>

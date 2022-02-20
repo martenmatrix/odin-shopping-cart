@@ -16,7 +16,7 @@ function useCustomSearchParams() {
     const setSearchParams = (newParams) => {
         const newObject = new URLSearchParams(newParams);
         localStorage.setItem('filter', newObject);
-        const to = { pathname: location.pathname, search: newParams.toString() };
+        const to = { pathname: location.pathname, hash: location.hash, search: newParams.toString() };
         navigate(to, { replace: true });
     }
 
