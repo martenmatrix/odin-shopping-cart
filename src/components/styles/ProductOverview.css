@@ -4,10 +4,6 @@
     height: 100%;
 }
 
-.all-images {
-    display: none;
-}
-
 .product-overview .navigate-back img {
     position: absolute;
     height: 5rem;
@@ -16,23 +12,47 @@
     left: 0;
 }
 
+.images-preview {
+    height: 25%;
+    width: 25%;
+
+    box-sizing: border-box;
+}
+
 .image-slider {
-    height: 20rem;
-    width: 20rem;
+    width: 100%;
+    aspect-ratio: 1 / 1;
 }
 
 .image-slider .main {
     display: flex;
     align-items: center;
+
+    width: 100%;
+    height: 100%;
 }
 
 .main .images {
     display: flex;
-    border: solid 1px black;
-    overflow: hidden;
+    align-items: center;
+    box-shadow: inset 0 0 10px black;
 
-    width: 90%;
-    height: 100%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+
+    width: 80%;
+    aspect-ratio: 1 / 1;
+}
+
+
+/* following two declarations are only needed if scrollbar is enabled and images should snap into place when scrolling */
+.main .images {
+    -webkit-overflow-scrolling: touch; /* content continues to scroll for a while after finishing the scroll gesture */
+    scroll-snap-type: x mandatory; /* see https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-snap-type */
+}
+
+.main .images > img {
+    scroll-snap-align: start;
 }
 
 .main .images img {
@@ -67,4 +87,31 @@
 
 .slider.right img {
     transform: rotate(180deg);
+}
+
+.all-images {
+    width: 80%;
+    height: 50%;
+    margin: auto;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px
+}
+
+.all-images .image-preview {
+    border: solid 2px black;
+    box-shadow: 5px 5px 10px #00000050;
+    aspect-ratio: 1 / 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.all-images .image-preview img {
+    width: 100%;
+    object-fit: scale-down;
+
+    aspect-ratio: 1 / 1;
 }

@@ -12,13 +12,14 @@ function NavigateBackToShop() {
     )
 }
 
-function ImageSmallPreview(props) {
+function ImageSmallPreviewLink(props) {
     const image = props.src;
+    const href = props.href;
 
     return (
-        <div className="image-preview">
+        <a href={href} className="image-preview">
             <img src={image}/>
-        </div>
+        </a>
     )
 }
 
@@ -26,27 +27,25 @@ function ImagesPreview(props) {
     const images = props.images;
 
     return (
-        <>
+        <div className="images-preview">
             <div className="image-slider">
                 <div className="main">
                     <div className="slider left">
                         <img src={LeftArrow} alt="Arrow which points to the left"></img>
                     </div>
                     <div className="images">
-                        <img src={LeftArrow} />
-                        {images.map((img, index) => <img key={index} src={img} />)}
+                        {images.map((img, index) => <img key={index} id={`slide-${index}`} src={img} />)}
                     </div>
                     <div className="slider right">
                         <img src={LeftArrow} alt="Arrow which points to the right"></img>
                     </div>
                 </div>
             </div>
-            { /*
+
             <div className="all-images">
-                {images.map((img, index) => <ImageSmallPreview key={index} src={img} />)}
+                {images.map((img, index) => <ImageSmallPreviewLink key={index} href={`#slide-${index}`} src={img} />)}
             </div>
-            */  }
-        </>
+        </div>
     )
 }
 
