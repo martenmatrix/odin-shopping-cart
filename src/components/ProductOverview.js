@@ -57,7 +57,7 @@ function ImagesPreview(props) {
                         <img src={LeftArrow} alt="Arrow which points to the left"></img>
                     </div>
                     <div className="images">
-                        {images.map((img, index) => <img key={index} id={`${index}`} src={img} alt="Preview of Product" />)}
+                        {images.map((img, index) => <img key={index} id={`${index}`} src={img} alt="Preview of Product" draggable="false"/>)}
                     </div>
                     <div className="slider right" onClick={slideForward}>
                         <img src={LeftArrow} alt="Arrow which points to the right"></img>
