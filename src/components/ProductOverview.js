@@ -44,7 +44,7 @@ function ImagesPreview(props) {
 
     function slideBack() {
         const newSlideNumber = getCurrentSlide() - 1;
-        if (newSlideNumber < 0 || !newSlideNumber) return;
+        if (newSlideNumber < 1 || !newSlideNumber) return;
         window.location.replace(`#${newSlideNumber}`)
     }
 
@@ -62,7 +62,7 @@ function ImagesPreview(props) {
                         <img src={LeftArrow} alt="Arrow which points to the left"></img>
                     </div>
                     <div className="images">
-                        {images.map((img, index) => <img key={index} id={`${index}`} src={img} alt="Preview of Product" draggable="false"/>)}
+                        {images.map((img, index) => <img key={index} id={`${index + 1}`} src={img} alt="Preview of Product" draggable="false"/>)}
                     </div>
                     <div className="slider right" onClick={slideForward}>
                         <img src={LeftArrow} alt="Arrow which points to the right"></img>
@@ -71,7 +71,7 @@ function ImagesPreview(props) {
             </div>
 
             <div className="all-images">
-                {images.map((img, index) => <ImageSmallPreviewLink key={index} href={`#${index}`} src={img} />)}
+                {images.map((img, index) => <ImageSmallPreviewLink key={index} href={`#${index + 1}`} src={img} />)}
             </div>
         </div>
     )
