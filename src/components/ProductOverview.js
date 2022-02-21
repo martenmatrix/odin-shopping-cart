@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 function NavigateBackToShop() {
     return (
         <Link to="/shop" className="navigate-back">
-            <img src={LeftArrow} alt="Arrow which points to the left"></img>
+            <img src={LeftArrow} alt="Arrow which points to the left" draggable="false"></img>
         </Link>  
     )
 }
@@ -19,7 +19,7 @@ function ImageSmallPreviewLink(props) {
 
     return (
         <a href={href} className="image-preview">
-            <img src={image} alt={alt}/>
+            <img src={image} alt={alt} draggable="false"/>
         </a>
     )
 }
@@ -105,7 +105,10 @@ function ProductSection(props) {
 function NotFound() {
     // big question mark which is rotating
     return (
-        <p>Not found.</p>
+        <div className="not-found">
+            <div>?</div>
+            <p>Not found.</p>
+        </div>
     )
 }
 
@@ -125,7 +128,7 @@ function ProductOverview(props) {
     return (
         <div className="product-overview">
             <NavigateBackToShop />
-            {product ? <ProductSection product={product} /> : null}
+            {product ? <ProductSection product={product} /> : <NotFound />}
         </div>
     )
 }
