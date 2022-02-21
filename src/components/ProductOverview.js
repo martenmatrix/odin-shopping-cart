@@ -17,8 +17,14 @@ function ImageSmallPreviewLink(props) {
     const alt = props.alt;
     const href = props.href;
 
+    function handleClick(e) {
+        e.preventDefault();
+        const hash = e.currentTarget.href;
+        window.location.replace(hash);
+    }
+
     return (
-        <a href={href} className="image-preview" draggable="false">
+        <a onClick={handleClick} href={href} className="image-preview" draggable="false">
             <img src={image} alt={alt} draggable="false"/>
         </a>
     )
@@ -29,7 +35,6 @@ function ImagesPreview(props) {
     const slideAmount = images.length;
 
     const location = useLocation();
-    const navigate = useNavigate();
 
     function getCurrentSlide() {
         const hash = location.hash;
@@ -40,13 +45,13 @@ function ImagesPreview(props) {
     function slideBack() {
         const newSlideNumber = getCurrentSlide() - 1;
         if (newSlideNumber < 0 || !newSlideNumber) return;
-        navigate(`#${newSlideNumber}`, { replace: true })
+        window.location.replace(`#${newSlideNumber}`)
     }
 
     function slideForward() {
         const newSlideNumber = getCurrentSlide() + 1;
         if (newSlideNumber > slideAmount || !newSlideNumber) return;
-        navigate(`#${newSlideNumber}`, { replace: true });
+        window.location.replace(`#${newSlideNumber}`)
     }
 
     return (

@@ -7,6 +7,8 @@ import NvidiaRTX3070 from '../img/products/nvidia-geforce-rtx-3070.png';
 import NvidiaRTX3080 from '../img/products/nvidia-geforce-rtx-3080.png';
 import NvidiaRTX3090 from '../img/products/nvidia-geforce-rtx-3090.png';
 
+
+// try not to use more than 4 images per page, otherwise overflow
 const products = [
     {
         id: '1',
@@ -65,7 +67,7 @@ const products = [
     {
         id: '7',
         name: 'Nvidia GeForce RTX 3090',
-        img: [NvidiaRTX3090, NvidiaRTX3090, NvidiaRTX3090, NvidiaRTX3090, NvidiaRTX3090, NvidiaRTX3090],
+        img: [NvidiaRTX3090, NvidiaRTX3090, NvidiaRTX3090, NvidiaRTX3090],
         chipset: 'Nvidia',
         series: 'RTX',
         price: '200',
