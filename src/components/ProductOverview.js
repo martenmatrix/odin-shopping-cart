@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 
 function NavigateBackToShop() {
     return (
-        <Link to="/shop" className="navigate-back">
+        <Link to="/shop" className="navigate-back" draggable="false">
             <img src={LeftArrow} alt="Arrow which points to the left" draggable="false"></img>
         </Link>  
     )
@@ -18,7 +18,7 @@ function ImageSmallPreviewLink(props) {
     const href = props.href;
 
     return (
-        <a href={href} className="image-preview">
+        <a href={href} className="image-preview" draggable="false">
             <img src={image} alt={alt} draggable="false"/>
         </a>
     )
