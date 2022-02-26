@@ -38,7 +38,7 @@ function ImagesPreview(props) {
 
     function getCurrentSlide() {
         const hash = location.hash;
-        const slide = hash.replace('#', '');
+        const slide = hash.replace('#', '') || 1;
         return parseInt(slide);
     }
 
