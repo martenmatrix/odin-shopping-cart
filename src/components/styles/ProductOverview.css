@@ -64,6 +64,27 @@
 
 .product-overview .main-content {
     margin-top: 5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.main-content .text-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    font-family: Montserrat, sans-serif;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.main-content .text-section .name {
+    font-size: 3rem;
+}
+
+.main-content .text-section .price {
+    margin-left: auto;
+    width: max-content;
 }
 
 .slider {

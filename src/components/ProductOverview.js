@@ -1,6 +1,7 @@
 import './styles/ProductOverview.css';
 import products from './data/products';
 import LeftArrow from './img/misc/left-arrow.svg';
+import ShoppingCart from './img/misc/shopping-cart.svg';
 import { Link, useParams, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
@@ -89,6 +90,18 @@ function NameAndPrice(props) {
     )
 }
 
+function AddToCartButton(props) {
+    return (
+        <div className="add">
+            <button onClick={console.log('cool')}></button>
+            <div className="fake-button">
+                <img src={ShoppingCart} alt="minimalistic shopping cart"></img>
+                <div className="text">Add to cart</div>
+            </div>
+        </div>
+    )
+}
+
 function ProductSection(props) {
     const product = props.product;
     
@@ -102,6 +115,7 @@ function ProductSection(props) {
             <ImagesPreview images={images}/>
             <div className="text-section">
                 <NameAndPrice name={name} price={`${price} ${currency}`}/>
+                <AddToCartButton />
             </div>
         </div>
     )
