@@ -90,10 +90,10 @@ function NameAndPrice(props) {
     )
 }
 
-function AddToCartButton(props) {
+function AddToCartButton() {
     return (
         <div className="add">
-            <button onClick={console.log('cool')}></button>
+            <button onClick={() => console.log('cool')}></button>
             <div className="fake-button">
                 <img src={ShoppingCart} alt="minimalistic shopping cart"></img>
                 <div className="text">Add to cart</div>
