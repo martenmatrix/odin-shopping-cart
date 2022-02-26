@@ -77,13 +77,13 @@ function ImagesPreview(props) {
     )
 }
 
-function TitleAndPrice(props) {
-    const title = props.title;
+function NameAndPrice(props) {
+    const name = props.name;
     const price = props.price;
 
     return (
         <div className="title-price">
-            <div className="title">{title}</div>
+            <div className="name">{name}</div>
             <div className="price">{price}</div>
         </div>
     )
@@ -93,16 +93,16 @@ function ProductSection(props) {
     const product = props.product;
     
     const images = product.img;
-    const title = product.title;
+    const name = product.name;
     const price = product.price;
     const currency = product.currency;
 
     return (
         <div className="main-content">
             <ImagesPreview images={images}/>
-            { /*
-            <TitleAndPrice title={title} price={`${price} ${currency}`}/>
-            */ }
+            <div className="text-section">
+                <NameAndPrice name={name} price={`${price} ${currency}`}/>
+            </div>
         </div>
     )
 }
@@ -111,8 +111,10 @@ function NotFound() {
     // big question mark which is rotating
     return (
         <div className="not-found">
-            <div>?</div>
-            <p>Not found.</p>
+            <div className="wrapper">
+                <div>?</div>
+                <p>Not found.</p>
+            </div>
         </div>
     )
 }
@@ -125,10 +127,11 @@ function ProductOverview(props) {
         return products.find(product => product.id === id)
     }
 
+    const productObject = getProductObject();
+
     useEffect(() => {
-        const productObject = getProductObject();
         setProduct(productObject);
-    }, [id])
+    }, [productObject])
 
     return (
         <div className="product-overview">
