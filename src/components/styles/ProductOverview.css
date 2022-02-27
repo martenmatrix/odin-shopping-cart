@@ -170,42 +170,45 @@
     }
 }
 
+
+.add * {
+    box-sizing: border-box;
+}
+
 .add {
     height: 3rem;
     width: 100%;
     align-self: center;
     position: relative;
-
-    box-sizing: border-box;
 }
 
 .add button {
     cursor: pointer;
+    padding: 0;
     margin: 0 50%;
     transform: translateX(-50%);
     position: absolute;
-    width: 60%;
+    width: 70%;
     height: 100%;
+    padding: 2rem;
     z-index: 1;
 
     /* reset default button style */
     border: none;
     background: none;
-    padding: 0 1rem;
 }
 
 .add .fake-button {
-    border: solid 5px black;
     color: white;
-    z-index: -1;
     margin: 0 auto;
     
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    padding: 0 1rem;
+    padding: 2rem;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.192);
 
     background: rgb(50, 205, 102);
-    width: 50%;
+    width: 70%;
     height: 100%;
 }
