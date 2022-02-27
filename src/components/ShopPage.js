@@ -3,7 +3,7 @@ import { useCustomSearchParams } from './customHooks';
 import { useState, createContext, useContext, useEffect } from 'react';
 import { Link, Outlet, Route, Routes } from 'react-router-dom';
 import ProductOverview from './ProductOverview';
-import ScrollingText from './ScrollingText'
+import { ScrollingText } from './misc'
 import products from './data/products';
 
 function FilterInput(props) {

@@ -4,7 +4,7 @@ import LeftArrow from './img/misc/left-arrow.svg';
 import ShoppingCart from './img/misc/shopping-cart.svg';
 import { Link, useParams, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import ScrollingText from './ScrollingText';
+import { ScrollingText, QuantitySelector } from './misc';
 
 function NavigateBackToShop() {
     return (
@@ -118,7 +118,10 @@ function ProductSection(props) {
             <ImagesPreview images={images}/>
             <div className="text-section">
                 <NameAndPrice name={name} price={`${price} ${currency}`}/>
-                <AddToCartButton />
+                <div className="quantity-add-to-cart">
+                    <QuantitySelector />
+                    <AddToCartButton />
+                </div>
             </div>
         </div>
     )

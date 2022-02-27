@@ -178,7 +178,7 @@
 }
 
 .add {
-    height: 3rem;
+    height: 100%;
     width: 100%;
     align-self: center;
     position: relative;
@@ -217,4 +217,10 @@
 
 .title-price .scroll-wrapper {
     width: 100%;
+}
+
+.quantity-add-to-cart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
