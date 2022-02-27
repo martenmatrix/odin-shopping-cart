@@ -1,8 +1,9 @@
 import './styles/ShopPage.css';
 import { useCustomSearchParams } from './customHooks';
-import { useState, createContext, useContext, useEffect, useRef } from 'react';
+import { useState, createContext, useContext, useEffect } from 'react';
 import { Link, Outlet, Route, Routes } from 'react-router-dom';
 import ProductOverview from './ProductOverview';
+import ScrollingText from './ScrollingText'
 import products from './data/products';
 
 function FilterInput(props) {
@@ -95,33 +96,12 @@ function ProductPreview(props) {
     const price = productObject.price;
     const currency = productObject.currency;
 
-    const textRef = useRef(null);
-
-    const [scrollWidth, setScrollWidth] = useState(null);
-    const [clientWidth, setClientWidth] = useState(null);
-
-    function isXOverflown() {
-        return scrollWidth > clientWidth;
-    }
-
-    useEffect(() => {
-        const currentTextRef = textRef.current;
-        setScrollWidth(currentTextRef.scrollWidth);
-        setClientWidth(currentTextRef.clientWidth);
-    }, [])
-
 
     return (
         <Link to={`product/${id}`} className="product">
             <img src={frontImage} alt={name}></img>
             <div className="information">
-                <div className="scroll-wrapper">
-                    <div ref={textRef} className="name">
-                        <span className={isXOverflown() ? 'animate' : ''}>
-                            {name.toUpperCase()}
-                        </span>
-                    </div>
-                </div>
+                <ScrollingText text={name.toUpperCase()}/>
                 <div className="price-wrapper">
                     <div className="price">{price}</div>
                     <div className="currency">{currency}</div>

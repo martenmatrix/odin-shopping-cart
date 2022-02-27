@@ -2,8 +2,9 @@ import './styles/ProductOverview.css';
 import products from './data/products';
 import LeftArrow from './img/misc/left-arrow.svg';
 import ShoppingCart from './img/misc/shopping-cart.svg';
-import { Link, useParams, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useParams, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import ScrollingText from './ScrollingText';
 
 function NavigateBackToShop() {
     return (
@@ -84,7 +85,9 @@ function NameAndPrice(props) {
 
     return (
         <div className="title-price">
-            <div className="name">{name}</div>
+            <div className="name">
+                <ScrollingText text={name} />
+            </div>
             <div className="price">{price}</div>
         </div>
     )
