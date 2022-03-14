@@ -3,8 +3,10 @@ import { useCustomSearchParams } from './customHooks';
 import { useState, createContext, useContext, useEffect } from 'react';
 import { Link, Outlet, Route, Routes } from 'react-router-dom';
 import ProductOverview from './ProductOverview';
+import CartPage from './CartPage';
 import { ScrollingText } from './misc'
 import products from './data/products';
+import ShoppingCart from './img/misc/shopping-cart.svg';
 
 function FilterInput(props) {
     const [addSearchParam, removeSearchParam, searchParams] = useContext(searchParamsContext);
@@ -172,7 +174,23 @@ function AllProductPreviews() {
     )
 }
 
-function Layout() {
+function OpenCart(props) {
+    const amountOfItems = props.amountOfItems;
+
+    return (
+        <Link className="shopping-cart-button" to="cart">
+            <button className="cart-round-button"></button>
+            <img src={ShoppingCart} alt="Simple Shopping cart"></img>
+            {amountOfItems ? <div className="red-dot-amount">
+                                <div className="actual-amount">{amountOfItems}</div>
+                            </div> : null}
+        </Link>
+    )
+}
+
+function Layout(props) {
+    const amountOfItems = props.amountOfItems;
+
     return (
         <div className="products">
             <Outlet />
@@ -191,8 +209,22 @@ function ShopPage() {
             <Sidebar />
             <Routes>
                 <Route path="/" element={<Layout />}>
-                    <Route index element={<AllProductPreviews />} />
-                    <Route path="/product/:id" element={<ProductOverview />}/>
+                    <Route index element={
+                    <>
+                        <AllProductPreviews />
+                        <OpenCart />
+                    </>
+                    } />
+                    <Route path="/product/:id/*" element={
+                    <>
+                        <ProductOverview />
+                        <OpenCart />
+                    </>
+                    } />
+                </Route>
+
+                <Route path="*/cart">
+                    <Route index element={<CartPage />}/>
                 </Route>
             </Routes>
         </div>

@@ -119,3 +119,54 @@ input[type="checkbox"]:not(:checked) + .new-checkbox-design .activated{
     width: 50%;
     height: 50%;
 }
+
+.shopping-cart-button {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 1rem;
+    
+    width: 5rem;
+    height: 5rem;
+}
+
+.cart-round-button {
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 100%;
+    background: black;
+}
+
+.shopping-cart-button img {
+    pointer-events: none;
+    position: absolute;
+    width: 40%;
+    height: 40%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.red-dot-amount {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1.2em;
+    height: 1.2em;
+    font-size: 1.2rem;
+
+    text-align: center;
+    line-height: 1;
+    font-family: Montserrat, sans-serif;
+    font-weight: bold;
+    background: red;
+    border-radius: 5rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+

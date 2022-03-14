@@ -31,8 +31,8 @@ function ScrollingText(props) {
     )
 }
 
-function QuantitySelector() {
-    const [currentQuantity, setCurrentQuantity] = useState(1);
+function QuantitySelector(props) {
+    const [currentQuantity, setCurrentQuantity] = props.quantityState;
 
     function onChange(e) {
         const newValue = parseInt(e.target.value);

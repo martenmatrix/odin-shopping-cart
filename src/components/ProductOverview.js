@@ -93,10 +93,12 @@ function NameAndPrice(props) {
     )
 }
 
-function AddToCartButton() {
+function AddToCartButton(props) {
+    const onClick = props.onClick;
+
     return (
         <div className="add">
-            <button onClick={() => console.log('cool')}></button>
+            <button onClick={onClick}></button>
             <div className="fake-button">
                 <img src={ShoppingCart} alt="minimalistic shopping cart"></img>
                 <div className="text">Add to cart</div>
@@ -113,14 +115,20 @@ function ProductSection(props) {
     const price = product.price;
     const currency = product.currency;
 
+    const [quantity, setQuantity] = useState(1);
+
+    function addToCart() {
+        if (quantity === 0) return;
+    }
+
     return (
         <div className="main-content">
             <ImagesPreview images={images}/>
             <div className="text-section">
                 <NameAndPrice name={name} price={`${price} ${currency}`}/>
                 <div className="quantity-add-to-cart">
-                    <QuantitySelector />
-                    <AddToCartButton />
+                    <QuantitySelector quantityState={[quantity, setQuantity]}/>
+                    <AddToCartButton onClick={addToCart} />
                 </div>
             </div>
         </div>
