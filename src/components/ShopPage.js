@@ -193,6 +193,7 @@ function Layout(props) {
 
     return (
         <div className="products">
+            {/*has built in context (outlet)*/}
             <Outlet />
         </div>
     )
@@ -209,22 +210,25 @@ function ShopPage() {
             <Sidebar />
             <Routes>
                 <Route path="/" element={<Layout />}>
-                    <Route index element={
+                    <Route path="/" element={
                     <>
+                        <Outlet />
                         <AllProductPreviews />
                         <OpenCart />
                     </>
-                    } />
+                    }>
+                        <Route path="cart" element={<CartPage />} />
+                    </Route>
+
                     <Route path="/product/:id/*" element={
                     <>
+                        <Outlet />
                         <ProductOverview />
                         <OpenCart />
                     </>
-                    } />
-                </Route>
-
-                <Route path="*/cart">
-                    <Route index element={<CartPage />}/>
+                    }>
+                        <Route path="cart" element={<CartPage />} />
+                    </Route>
                 </Route>
             </Routes>
         </div>
