@@ -1,5 +1,6 @@
 import './styles/CartPage.css';
 import products from './data/products';
+import { QuantitySelector } from './misc';
 import { useEffect, useState } from 'react';
 
 function InBasket(props) {
@@ -16,17 +17,41 @@ function InBasket(props) {
     }, [id]);
 
     return (
-        <div className="product">
+        <div className="cart-product">
+            {
+                product ?
+                <>
+                    <img alt={product.name} src={product.img[0]} />
+                    <div className="name-description">
+                        <div className="name">{product.name}</div>
+                        <div className="description">A fitting description is always neat.</div>
+                    </div>
+                    <QuantitySelector quantityState={[quantity, ]}/>
+                    <div className="delete">+</div>
 
+                </>
+                : 'Loading...' 
+            }
         </div>
     )
 }
 
 function CartPage(props) {
+    const productsIds = ['1', '2']; //ids
     return (
         <div className="cart-page">
             <div className="wrapper">
                 <div className="close">+</div>
+                <div className="products">
+                    {productsIds.map(id => <InBasket id={id}/>)}
+                </div>
+    
+                <div className="total">
+                <hr />
+                    <div className="amount">
+                        TOTAL 500 EUR
+                    </div>
+                </div>
             </div>
         </div>
     )

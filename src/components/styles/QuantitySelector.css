@@ -1,5 +1,7 @@
 .quantity-selector * {
     line-height: 0;
+    font-family: Montserrat, sans-serif;
+    font-weight: bold;
 }
 
 .quantity-selector {
@@ -15,7 +17,6 @@
     height: 5rem;
     font-family: Montserrat, sans-serif;
     font-size: 2.5rem;
-    font-weight: bold;
     text-align: center;
     border: none;
 }
@@ -23,6 +24,7 @@
 .quantity-selector span {
     cursor: pointer;
     padding: 0.2em;
+    font-size: 3rem;
     user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
