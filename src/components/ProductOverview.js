@@ -121,11 +121,12 @@ function ProductSection(props) {
     const [addSearchParam, removeSearchParam, searchParams] = useCustomSearchParams();
 
     function addToCart() {
+        const separator = 'x';
         const getCart = () => {
             const products = [];
             for (const [key, value] of searchParams) {
                 if (key === 'incart') {
-                    const productArray = value.split('y');
+                    const productArray = value.split(separator);
                     products.push(productArray);
                 }
             }
@@ -142,11 +143,12 @@ function ProductSection(props) {
         if (alreadyInCart) {
             const [currentId, currentQuantity] = alreadyInCart;
             const newQuantity = parseInt(currentQuantity) + quantity;
+            if (newQuantity > 999) return;
 
-            removeSearchParam('incart', currentId + 'y' + currentQuantity);
-            addSearchParam('incart', currentId + 'y' + newQuantity.toString());
+            removeSearchParam('incart', currentId + separator + currentQuantity);
+            addSearchParam('incart', currentId + separator + newQuantity.toString());
         } else {
-            addSearchParam('incart', id + 'y' + quantity.toString());
+            addSearchParam('incart', id + separator + quantity.toString());
         }
     }
 
