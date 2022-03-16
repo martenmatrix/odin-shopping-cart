@@ -2,6 +2,7 @@ import './styles/CartPage.css';
 import products from './data/products';
 import { QuantitySelector } from './misc';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function InBasket(props) {
     const id = props.id;
@@ -38,10 +39,16 @@ function InBasket(props) {
 
 function CartPage(props) {
     const productsIds = ['1', '2']; //ids
+    const navigate = useNavigate();
+
+    function onClose() {
+        navigate(-1, { replace: true });
+    }
+
     return (
         <div className="cart-page">
             <div className="wrapper">
-                <div className="close">+</div>
+                <div className="close" onClick={onClose}>+</div>
                 <div className="products">
                     {productsIds.map(id => <InBasket id={id}/>)}
                 </div>

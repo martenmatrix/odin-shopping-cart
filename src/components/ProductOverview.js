@@ -3,6 +3,7 @@ import products from './data/products';
 import LeftArrow from './img/misc/left-arrow.svg';
 import ShoppingCart from './img/misc/shopping-cart.svg';
 import { Link, useParams, useLocation } from 'react-router-dom';
+import { useCustomSearchParams } from './customHooks';
 import { useState, useEffect } from 'react';
 import { ScrollingText, QuantitySelector } from './misc';
 
@@ -114,11 +115,39 @@ function ProductSection(props) {
     const name = product.name;
     const price = product.price;
     const currency = product.currency;
+    const id = product.id;
 
     const [quantity, setQuantity] = useState(1);
+    const [addSearchParam, removeSearchParam, searchParams] = useCustomSearchParams();
 
     function addToCart() {
-        if (quantity === 0) return;
+        const getCart = () => {
+            const products = [];
+            for (const [key, value] of searchParams) {
+                if (key === 'incart') {
+                    const productArray = value.split('y');
+                    products.push(productArray);
+                }
+            }
+            return products;
+        }
+
+        const cart = getCart();
+        const alreadyInCart = cart.find((product) => {
+            const [currentId, ] = product;
+
+            return currentId === id;
+        });
+
+        if (alreadyInCart) {
+            const [currentId, currentQuantity] = alreadyInCart;
+            const newQuantity = parseInt(currentQuantity) + quantity;
+
+            removeSearchParam('incart', currentId + 'y' + currentQuantity);
+            addSearchParam('incart', currentId + 'y' + newQuantity.toString());
+        } else {
+            addSearchParam('incart', id + 'y' + quantity.toString());
+        }
     }
 
     return (

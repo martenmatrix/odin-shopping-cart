@@ -21,13 +21,13 @@ function useCustomSearchParams() {
     }
 
     const addSearchParam = (key, value) => {
-        const newURLParams = new URLSearchParams(location.search);
+        const newURLParams = new URLSearchParams(window.location.search);
         newURLParams.append(key, value);
         setSearchParams(newURLParams);
     }
     
     const removeSearchParam = (key, value) => {
-        const newURLParams = new customURLSearchParams(location.search);
+        const newURLParams = new customURLSearchParams(window.location.search); // useLocation does not update quick enough?
         newURLParams.remove(key, value);
         setSearchParams(newURLParams);
     }
