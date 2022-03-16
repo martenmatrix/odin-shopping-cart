@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 function useCustomSearchParams() {
@@ -10,15 +10,17 @@ function useCustomSearchParams() {
         newEntries.forEach(newEntry => this.append(key, newEntry));
     }
 
+    const [currentSearchParams, setCurrentSearchParams] = useState(new customURLSearchParams());
+
     const navigate = useNavigate();
     const location = useLocation(); // couldn't i just use window.location.pathname ?
 
-    const setSearchParams = (newParams) => {
+    const setSearchParams = useCallback((newParams) => {
         const newObject = new URLSearchParams(newParams);
         localStorage.setItem('filter', newObject);
         const to = { pathname: location.pathname, hash: location.hash, search: newParams.toString() };
         navigate(to, { replace: true });
-    }
+    }, [location.pathname, location.hash, navigate]);
 
     const addSearchParam = (key, value) => {
         const newURLParams = new URLSearchParams(window.location.search);
@@ -32,18 +34,18 @@ function useCustomSearchParams() {
         setSearchParams(newURLParams);
     }
 
-    const getSearchParams = () => {
-        return new URLSearchParams(location.search);
-    }
+    useEffect(() => {
+        setCurrentSearchParams(new URLSearchParams(location.search));
+    }, [location.search]);
 
     useEffect(() => {
         const filters = localStorage.getItem('filter');
         if (filters) {
             setSearchParams(filters);
         }
-    }, [location.pathname]) // does not trigger when user clicks home nav button twice because path stays the same => filter will be reset
+    }, [location.pathname, setSearchParams]) // does not trigger when user clicks home nav button twice because path stays the same => filter will be reset
 
-    return [addSearchParam, removeSearchParam, getSearchParams()];
+    return [addSearchParam, removeSearchParam, currentSearchParams];
 }
 
 export { useCustomSearchParams };
