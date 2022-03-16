@@ -123,6 +123,7 @@ function AllProductPreviews() {
             const possibleFilters = [...searchParams.keys()];
 
             possibleFilters.forEach(filter => {
+                if (filter === 'incart') return;
                 const isActive = searchParams.has(filter);
                 if (isActive) {
                     filters[filter] = searchParams.getAll(filter);
