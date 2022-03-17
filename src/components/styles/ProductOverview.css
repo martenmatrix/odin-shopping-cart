@@ -200,6 +200,14 @@
     background: none;
 }
 
+@keyframes background-panning {
+    from {
+        background-position-x: 100%;
+    } to {
+        background-position-x: 0;
+    }
+}
+
 .add .fake-button {
     color: white;
     margin: 0 auto;
@@ -211,6 +219,10 @@
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.192);
 
     background: rgb(50, 205, 102);
+    background-image: repeating-linear-gradient(-45deg, transparent, transparent 60%, rgba(255, 255, 255, 0.1) 61%, rgba(255, 255, 255, 0.1) 65%, transparent 66%, transparent 100%);
+
+    background-size: 400%;
+    animation: background-panning 3s linear infinite;
     width: 70%;
     height: 100%;
 }
