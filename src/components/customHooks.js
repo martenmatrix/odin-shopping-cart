@@ -40,7 +40,7 @@ function useCustomSearchParams() {
 
     useEffect(() => {
         const filters = localStorage.getItem('filter');
-        if (filters) {
+        if (filters || filters === "") {
             setSearchParams(filters);
         }
     }, [location.pathname, setSearchParams]) // does not trigger when user clicks home nav button twice because path stays the same => filter will be reset
