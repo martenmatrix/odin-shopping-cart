@@ -20,7 +20,7 @@ function Layout() {
 
 function App() {
   return (
-      <BrowserRouter basename="/odin-shopping-cart">
+      <BrowserRouter basename="/shopping-cart">
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Homepage shopPath='shop'/>} />
