@@ -23,7 +23,6 @@ const products = [
         id: '2',
         name: 'AMD Radeon RX 6800XT',
         img: [RadeonRX6800xt],
-        chipset: 'AMD',
         series: 'RX',
         price: '200',
         currency: 'EUR',
@@ -39,7 +38,7 @@ const products = [
     },
     {
         id: '4',
-        name: 'Nvidia GeForce RTX 3060 Ti Website by Marten222',
+        name: 'Nvidia GeForce RTX 3060',
         img: [NvidiaRTX3060Ti],
         chipset: 'Nvidia',
         series: 'RTX',
@@ -66,7 +65,7 @@ const products = [
     },
     {
         id: '7',
-        name: 'Nvidia GeForce RTX 3090',
+        name: 'Nvidia GeForce RTX 3090 is a really interesting product',
         img: [NvidiaRTX3090, NvidiaRTX3090, NvidiaRTX3090, NvidiaRTX3090],
         chipset: 'Nvidia',
         series: 'RTX',
