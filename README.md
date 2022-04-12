@@ -1,4 +1,4 @@
-# Weather App
+# Shopping Cart
 
 This React application simulates an online store, where you can purchase graphic cards. The project makes heavily use of React Router and always saves the exact state of the page in the URL. The current  viewed image of the image slideshow for the product, the cart, the filters applied, the current route; everything is saved trough React Router and a `useCustomSearchParams()` hook, which allows removing a single search parameter by its key and its value even if there are other search parameters with the same key.
 
