@@ -58,5 +58,6 @@ If you want to run the application on your local pc or just want to contribute, 
 ## :blue_book: Technology Stack
 - **Create React App** v5.0.0
 - **React Router** v.6.2.1
+
 ## :scroll: License
 [MIT](https://github.com/martenmatrix/shopping-cart/blob/main/LICENSE)
