@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/shopping-cart/static/css/main.a2a5932f.css",
+    "main.js": "/shopping-cart/static/js/main.24ec3870.js",
+    "static/media/index.webp": "/shopping-cart/static/media/index.a65a41fc5fc2dc7696b7.webp",
+    "static/media/nvidia-geforce-rtx-3070.png": "/shopping-cart/static/media/nvidia-geforce-rtx-3070.5ef8f54ac2b25bdd6b7d.png",
+    "static/media/nvidia-geforce-rtx-3060-ti.png": "/shopping-cart/static/media/nvidia-geforce-rtx-3060-ti.caa3860c597d568e100e.png",
+    "static/media/nvidia-geforce-rtx-3090.png": "/shopping-cart/static/media/nvidia-geforce-rtx-3090.fd8a8d92350a942ded20.png",
+    "static/media/nvidia-geforce-rtx-3080.png": "/shopping-cart/static/media/nvidia-geforce-rtx-3080.cd07cdc58da9d63f9571.png",
+    "static/media/small-logo.png": "/shopping-cart/static/media/small-logo.fe1ecc99e07e358e67bf.png",
+    "static/media/amd-radeon-rx-6900xt.png": "/shopping-cart/static/media/amd-radeon-rx-6900xt.f05d1c878d46a190faaf.png",
+    "static/media/amd-radeon-rx-6800xt.png": "/shopping-cart/static/media/amd-radeon-rx-6800xt.5c41a57b2fbbd127a7e8.png",
+    "static/media/amd-radeon-rx-6700xt.png": "/shopping-cart/static/media/amd-radeon-rx-6700xt.f5e0bb0ab4f670122ccb.png",
+    "index.html": "/shopping-cart/index.html",
+    "static/media/shopping-cart.svg": "/shopping-cart/static/media/shopping-cart.ff743dcc7e111f2c0c4b08bef2eca64a.svg",
+    "static/media/left-arrow.svg": "/shopping-cart/static/media/left-arrow.59e8568a8cf5d2299ff10fd8d985726b.svg",
+    "main.a2a5932f.css.map": "/shopping-cart/static/css/main.a2a5932f.css.map",
+    "main.24ec3870.js.map": "/shopping-cart/static/js/main.24ec3870.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a2a5932f.css",
+    "static/js/main.24ec3870.js"
+  ]
+}
